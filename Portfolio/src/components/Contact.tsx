@@ -12,7 +12,7 @@ export function Contact() {
         <FadeIn>
           <p className="eyebrow">06 / Contact</p>
           <h2 id="contact-title" className="display-title">Let&apos;s build<br /><em>something useful.</em></h2>
-          <p className="contact__message">Have an opportunity, project, or technical conversation in mind? I&apos;d be glad to connect.</p>
+          <p className="contact__message">{portfolioData.contactMessage}</p>
         </FadeIn>
         <FadeIn className="contact__actions" delay={0.12}>
           <MagneticButton href={`mailto:${portfolioData.email}`}>

@@ -11,17 +11,21 @@ export type Project = {
 
 export const portfolioData = {
   name: 'Keerthi Srishank',
-  firstName: 'Keerthi',
-  headline: 'Computer Science Student · AI/ML & Software Development',
-  location: 'Telangana, India',
+  firstName: 'Srishank',
+  headline: 'Computer Science · AI & ML · Software Development',
+  location: 'Hyderabad, Telangana, India',
+  availability: 'Open to internships & software development opportunities',
   email: 'keerthisrishank@gmail.com',
   phone: '+91-7675008218',
+  heroStatement: 'Building thoughtful digital systems where intelligent ideas meet real-world interaction.',
+  contactMessage:
+    'Keerthi Srishank is currently open to internship and software development opportunities. I\'d be glad to connect about a project or technical conversation.',
   socialLinks: {
     github: 'https://github.com/srishank-17',
     linkedin: 'https://linkedin.com/in/srishank/',
   },
   about:
-    'I am a Computer Science student focused on building AI-driven, real-time, and full-stack applications. My work spans adaptive learning, enterprise collaboration, voice interaction, and responsive web experiences - supported by a foundation in algorithms, software engineering, and machine learning.',
+    'Keerthi Srishank is a Computer Science student focused on building AI-driven, real-time, and full-stack applications. My work spans adaptive learning, enterprise collaboration, voice interaction, and responsive web experiences - supported by a foundation in algorithms, software engineering, and machine learning.',
   education: {
     degree: 'B.Tech in Computer Science',
     institution: 'Geethanjali College of Engineering and Technology, Telangana',

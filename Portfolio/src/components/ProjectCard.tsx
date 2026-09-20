@@ -34,9 +34,11 @@ export function ProjectCard({ project, index, total }: { project: Project; index
         <div className="project-card__content">
           <div className="project-card__copy">
             <p>{project.description}</p>
+            <p className="project-card__micro-label">Key features</p>
             <ul>
               {project.details.map((detail) => <li key={detail}>{detail}</li>)}
             </ul>
+            <p className="project-card__micro-label">Technologies</p>
             <div className="tag-list">
               {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
             </div>

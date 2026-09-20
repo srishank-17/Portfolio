@@ -1,0 +1,19 @@
+type BrandMarkProps = {
+  className?: string
+}
+
+// Mirrors the favicon path so the navigation mark and browser branding share one visual language.
+export function BrandMark({ className = '' }: BrandMarkProps) {
+  return (
+    <svg className={`brand-mark ${className}`} viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M39 20c-2.3-2.1-5-3.1-8.1-3.1-5.6 0-9.4 3-9.4 7.5 0 10.4 18.1 6 18.1 15 0 4.9-4 8-10 8-3.3 0-6.5-1.2-8.7-3.5"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="4"
+      />
+    </svg>
+  )
+}

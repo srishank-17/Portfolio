@@ -14,7 +14,7 @@ export function Hero() {
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 90, damping: 18 })
 
   const handlePointerMove: React.PointerEventHandler<HTMLDivElement> = (event) => {
-    if (reduceMotion || !visualRef.current) return
+    if (reduceMotion || event.pointerType !== 'mouse' || !visualRef.current) return
     const bounds = visualRef.current.getBoundingClientRect()
     mouseX.set((event.clientX - bounds.left) / bounds.width - 0.5)
     mouseY.set((event.clientY - bounds.top) / bounds.height - 0.5)
@@ -42,7 +42,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <span>Hi, I&apos;m</span>
-          <span className="gradient-text">Keerthi.</span>
+          <span className="gradient-text">{portfolioData.firstName}.</span>
         </motion.h1>
         <motion.div
           className="hero__intro"
@@ -50,7 +50,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <p>Building thoughtful digital systems where intelligent ideas meet real-world interaction.</p>
+          <p>{portfolioData.heroStatement}</p>
           <ArrowDownRight aria-hidden="true" size={24} strokeWidth={1.5} />
         </motion.div>
         <motion.div
@@ -60,7 +60,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <MagneticButton href="#projects">View projects <ArrowUpRight size={16} /></MagneticButton>
-          <MagneticButton href="#contact" variant="secondary">Contact me</MagneticButton>
+          <MagneticButton href="#contact" variant="secondary">Contact me <ArrowUpRight size={16} /></MagneticButton>
         </motion.div>
       </div>
       <motion.div
@@ -82,7 +82,10 @@ export function Hero() {
         <span className="hero__coordinate hero__coordinate--three">BUILD / 01</span>
       </motion.div>
       <div className="hero__footer">
-        <p>Based in {portfolioData.location}</p>
+        <div className="hero__meta">
+          <p>Based in {portfolioData.location}</p>
+          <p className="hero__availability"><span aria-hidden="true" /> {portfolioData.availability}</p>
+        </div>
         <div className="hero__socials" aria-label="Professional links">
           <a href={portfolioData.socialLinks.github} target="_blank" rel="noreferrer" aria-label="GitHub">
             <Github size={18} />
