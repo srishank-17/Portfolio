@@ -8,6 +8,13 @@ export function About() {
   return (
     <section id="about" className="about section-dark" aria-labelledby="about-title">
       <div className="about__grid" aria-hidden="true" />
+      <div className="about__depth-field" aria-hidden="true">
+        <span className="about__depth-orbit about__depth-orbit--one" />
+        <span className="about__depth-orbit about__depth-orbit--two" />
+        <span className="about__depth-node about__depth-node--one" />
+        <span className="about__depth-node about__depth-node--two" />
+        <span className="about__depth-plane" />
+      </div>
       <div className="about__decor about__decor--disc" aria-hidden="true" />
       <div className="about__decor about__decor--cube" aria-hidden="true" />
       <div className="section-shell about__content">

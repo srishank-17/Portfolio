@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import { portfolioData } from '../data/portfolio'
 import { FadeIn } from './FadeIn'
+import { SkillNetwork } from './SkillNetwork'
 
 export function Skills() {
   return (
@@ -10,6 +11,9 @@ export function Skills() {
           <p className="eyebrow">02 / What I do</p>
           <h2 id="skills-title" className="display-title">Build, learn,<br />iterate.</h2>
           <p className="section-heading__note">A blend of engineering fundamentals, product-minded web development, and AI/ML exploration.</p>
+        </FadeIn>
+        <FadeIn delay={0.08} y={18}>
+          <SkillNetwork />
         </FadeIn>
         <div className="skill-list">
           {portfolioData.skills.map((skill, index) => (

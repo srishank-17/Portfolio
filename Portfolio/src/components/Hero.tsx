@@ -1,27 +1,26 @@
-import { useRef } from 'react'
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
+import { lazy, Suspense, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { ArrowDownRight, ArrowUpRight, Github, Linkedin } from 'lucide-react'
 import { portfolioData } from '../data/portfolio'
 import { MagneticButton } from './MagneticButton'
-import { OrbitalObject } from './AbstractVisual'
+
+const Globe = lazy(async () => ({ default: (await import('./Globe')).Globe }))
 
 export function Hero() {
-  const visualRef = useRef<HTMLDivElement>(null)
-  const reduceMotion = useReducedMotion()
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [7, -7]), { stiffness: 90, damping: 18 })
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 90, damping: 18 })
+  const heroRef = useRef<HTMLElement>(null)
 
-  const handlePointerMove: React.PointerEventHandler<HTMLDivElement> = (event) => {
-    if (reduceMotion || event.pointerType !== 'mouse' || !visualRef.current) return
-    const bounds = visualRef.current.getBoundingClientRect()
-    mouseX.set((event.clientX - bounds.left) / bounds.width - 0.5)
-    mouseY.set((event.clientY - bounds.top) / bounds.height - 0.5)
+  const handlePointerMove: React.PointerEventHandler<HTMLElement> = (event) => {
+    if (event.pointerType !== 'mouse' || !heroRef.current) return
+    const bounds = heroRef.current.getBoundingClientRect()
+    heroRef.current.style.setProperty('--hero-pointer-x', `${((event.clientX - bounds.left) / bounds.width) * 100}%`)
+    heroRef.current.style.setProperty('--hero-pointer-y', `${((event.clientY - bounds.top) / bounds.height) * 100}%`)
   }
 
   return (
-    <section id="top" className="hero" aria-labelledby="hero-title">
+    <section id="top" ref={heroRef} className="hero" aria-labelledby="hero-title" onPointerMove={handlePointerMove} onPointerLeave={() => {
+      heroRef.current?.style.setProperty('--hero-pointer-x', '72%')
+      heroRef.current?.style.setProperty('--hero-pointer-y', '28%')
+    }}>
       <div className="hero__grain" aria-hidden="true" />
       <div className="hero__aurora hero__aurora--one" aria-hidden="true" />
       <div className="hero__aurora hero__aurora--two" aria-hidden="true" />
@@ -64,19 +63,15 @@ export function Hero() {
         </motion.div>
       </div>
       <motion.div
-        ref={visualRef}
         className="hero__visual-wrap"
-        onPointerMove={handlePointerMove}
-        onPointerLeave={() => {
-          mouseX.set(0)
-          mouseY.set(0)
-        }}
-        style={{ rotateX, rotateY, transformPerspective: 1000 }}
         initial={{ opacity: 0, scale: 0.8, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 1.05, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
       >
-        <OrbitalObject />
+        <span className="hero__visual-field" aria-hidden="true" />
+        <Suspense fallback={<span className="hero__globe-fallback" aria-hidden="true" />}>
+          <Globe />
+        </Suspense>
         <span className="hero__coordinate hero__coordinate--one">SYS / 26</span>
         <span className="hero__coordinate hero__coordinate--two">AI / ML</span>
         <span className="hero__coordinate hero__coordinate--three">BUILD / 01</span>
