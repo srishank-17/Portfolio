@@ -13,6 +13,7 @@ import { Skills } from './components/Skills'
 import { CustomCursor } from './components/CustomCursor'
 import { ScrollProgress } from './components/ScrollProgress'
 import { PersistentEnvironment } from './components/PersistentEnvironment'
+import { GlobalVideoBackground } from './components/GlobalVideoBackground'
 
 function App() {
   const [booted, setBooted] = useState(false)
@@ -20,6 +21,7 @@ function App() {
   return (
     <>
       {!booted && <BootLoader onComplete={() => setBooted(true)} />}
+      <GlobalVideoBackground />
       <PersistentEnvironment />
       <ScrollProgress />
       <CustomCursor />

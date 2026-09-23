@@ -23,7 +23,7 @@ export function PersistentEnvironment() {
 
     const compact = window.matchMedia('(max-width: 700px)').matches
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2('#020604', 0.14)
+    scene.fog = new THREE.FogExp2('#030516', 0.14)
 
     const camera = new THREE.PerspectiveCamera(compact ? 38 : 34, 1, 0.1, 30)
     camera.position.set(0, 0, 5.3)
@@ -39,7 +39,7 @@ export function PersistentEnvironment() {
     scene.add(environment)
 
     const textureMaterial = new THREE.MeshBasicMaterial({
-      color: '#3dff91',
+      color: '#58caff',
       transparent: true,
       opacity: 0.52,
       blending: THREE.AdditiveBlending,
@@ -74,7 +74,7 @@ export function PersistentEnvironment() {
 
     const depthPlane = new THREE.Mesh(
       new THREE.PlaneGeometry(compact ? 5.7 : 7.1, compact ? 5.7 : 7.1),
-      new THREE.MeshBasicMaterial({ color: '#075a30', transparent: true, opacity: 0.055, blending: THREE.AdditiveBlending, depthWrite: false }),
+      new THREE.MeshBasicMaterial({ color: '#443277', transparent: true, opacity: 0.055, blending: THREE.AdditiveBlending, depthWrite: false }),
     )
     depthPlane.position.set(0.12, -0.07, -0.85)
     depthPlane.rotation.set(0.08, 0.12, -0.04)
@@ -82,14 +82,14 @@ export function PersistentEnvironment() {
 
     const coreMask = new THREE.Mesh(
       new THREE.CircleGeometry(compact ? 0.34 : 0.42, 48),
-      new THREE.MeshBasicMaterial({ color: '#020604', transparent: true, opacity: 0.95, depthWrite: false }),
+      new THREE.MeshBasicMaterial({ color: '#030516', transparent: true, opacity: 0.95, depthWrite: false }),
     )
     coreMask.position.set(0.07, 0.02, 0.1)
     environment.add(coreMask)
 
     const ring = new THREE.LineLoop(
       new THREE.BufferGeometry().setFromPoints(new THREE.EllipseCurve(0.07, 0.02, compact ? 0.48 : 0.58, compact ? 0.48 : 0.58, 0, Math.PI * 2, false, 0).getPoints(64).map((point) => new THREE.Vector3(point.x, point.y, 0.13))),
-      new THREE.LineBasicMaterial({ color: '#72ffae', transparent: true, opacity: 0.38 }),
+      new THREE.LineBasicMaterial({ color: '#d39aff', transparent: true, opacity: 0.38 }),
     )
     environment.add(ring)
 
@@ -102,11 +102,11 @@ export function PersistentEnvironment() {
     const anchors = [new THREE.Vector2(-0.62, 0.36), new THREE.Vector2(-0.62, -0.36), new THREE.Vector2(0.62, 0.36), new THREE.Vector2(0.62, -0.36)]
     const paths: PathLayer[] = pathSpecs.map((points, index) => {
       const curve = new THREE.CatmullRomCurve3(points)
-      const lineMaterial = new THREE.LineBasicMaterial({ color: '#38ff8d', transparent: true, opacity: 0.13 })
+      const lineMaterial = new THREE.LineBasicMaterial({ color: '#62ceff', transparent: true, opacity: 0.13 })
       const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(compact ? 24 : 42)), lineMaterial)
       const node = new THREE.Mesh(
         new THREE.SphereGeometry(compact ? 0.032 : 0.04, 10, 10),
-        new THREE.MeshBasicMaterial({ color: '#a6ffd0', transparent: true, opacity: 0.78 }),
+        new THREE.MeshBasicMaterial({ color: '#d7e5ff', transparent: true, opacity: 0.78 }),
       )
       node.position.copy(points[0])
       environment.add(line, node)
@@ -115,13 +115,13 @@ export function PersistentEnvironment() {
 
     const packet = new THREE.Mesh(
       new THREE.SphereGeometry(compact ? 0.045 : 0.058, 12, 12),
-      new THREE.MeshBasicMaterial({ color: '#dcffe9', transparent: true, opacity: 0.92 }),
+      new THREE.MeshBasicMaterial({ color: '#ffd08a', transparent: true, opacity: 0.92 }),
     )
     environment.add(packet)
-    const packetLight = new THREE.PointLight('#66ff9f', compact ? 0.55 : 0.85, 2.4)
+    const packetLight = new THREE.PointLight('#77cfff', compact ? 0.55 : 0.85, 2.4)
     packet.add(packetLight)
 
-    scene.add(new THREE.AmbientLight('#0b3b23', 1.3))
+    scene.add(new THREE.AmbientLight('#22153f', 1.3))
 
     const resize = () => {
       const bounds = host.getBoundingClientRect()
@@ -173,7 +173,7 @@ export function PersistentEnvironment() {
     let smoothedScroll = scrollTarget
     const render = (now: number) => {
       timer.update(now)
-      const elapsed = timer.getElapsed()
+      const elapsed = Math.max(timer.getElapsed(), 0)
       pointer.x = lerp(pointer.x, pointer.targetX, 0.045)
       pointer.y = lerp(pointer.y, pointer.targetY, 0.045)
       pointer.focus = lerp(pointer.focus, pointer.targetFocus, 0.05)
@@ -199,8 +199,8 @@ export function PersistentEnvironment() {
         const nodeScale = 1 + (active ? energy * 0.85 : 0)
         path.node.scale.setScalar(nodeScale)
       })
-      const activePath = paths[pointer.activePath]
-      const travel = (elapsed * (0.075 + energy * 0.13) + pointer.activePath * 0.21) % 1
+      const activePath = paths[pointer.activePath] ?? paths[0]
+      const travel = ((elapsed * (0.075 + energy * 0.13) + pointer.activePath * 0.21) % 1 + 1) % 1
       activePath.curve.getPointAt(travel, packet.position)
       packet.scale.setScalar(0.75 + energy * 0.6)
       packet.visible = !reduceMotion && (energy > 0.08 || !compact)
