@@ -12,6 +12,7 @@ import { Projects } from './components/Projects'
 import { Skills } from './components/Skills'
 import { CustomCursor } from './components/CustomCursor'
 import { ScrollProgress } from './components/ScrollProgress'
+import { PersistentEnvironment } from './components/PersistentEnvironment'
 
 function App() {
   const [booted, setBooted] = useState(false)
@@ -19,6 +20,7 @@ function App() {
   return (
     <>
       {!booted && <BootLoader onComplete={() => setBooted(true)} />}
+      <PersistentEnvironment />
       <ScrollProgress />
       <CustomCursor />
       <main className={booted ? 'site-content is-booted' : 'site-content'} aria-busy={!booted}>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { BrandMark } from './BrandMark'
 
 type BootLoaderProps = {
   onComplete: () => void
@@ -51,6 +52,9 @@ export function BootLoader({ onComplete }: BootLoaderProps) {
           transition={{ duration: reduceMotion ? 0.01 : 0.62, ease: [0.76, 0, 0.24, 1] }}
         >
           <div className="boot-loader__grid" aria-hidden="true" />
+          <div className="boot-loader__architecture" aria-hidden="true">
+            {[0, 1, 2, 3, 4, 5, 6].map((lineIndex) => <span key={lineIndex} style={{ '--line-index': lineIndex } as React.CSSProperties} />)}
+          </div>
           <div className="boot-loader__scan" aria-hidden="true" />
           <div className="boot-loader__topline">
             <span>KEERTHI SRISHANK</span>
@@ -59,7 +63,7 @@ export function BootLoader({ onComplete }: BootLoaderProps) {
           <div className="boot-loader__center">
             <p className="boot-loader__eyebrow">SYSTEM INITIALIZING</p>
             <div className="boot-loader__dial" style={{ '--progress': `${progress * 3.6}deg` } as React.CSSProperties}>
-              <span className="boot-loader__core" />
+              <span className="boot-loader__core"><BrandMark /></span>
               <strong>{String(progress).padStart(3, '0')}</strong>
             </div>
             <div className="boot-loader__progress" aria-hidden="true"><i style={{ transform: `scaleX(${progress / 100})` }} /></div>

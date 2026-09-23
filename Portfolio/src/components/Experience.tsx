@@ -36,9 +36,9 @@ function TimelineList() {
 
 export function Experience() {
   return (
-    <section id="experience" className="experience section-light" aria-labelledby="experience-title">
+    <section id="experience" className="experience section-dark" aria-labelledby="experience-title">
       <div className="section-shell">
-        <FadeIn className="section-heading section-heading--light">
+        <FadeIn className="section-heading">
           <p className="eyebrow">04 / Experience</p>
           <h2 id="experience-title" className="display-title">In the<br />real world.</h2>
         </FadeIn>

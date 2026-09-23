@@ -2,26 +2,6 @@ import { useRef } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion'
 import type { Project } from '../data/portfolio'
 
-export function OrbitalObject({ className = '' }: { className?: string }) {
-  const reduceMotion = useReducedMotion()
-
-  return (
-    <div className={`orbital-object__anchor ${className}`} aria-hidden="true">
-      <motion.div
-        className="orbital-object"
-        animate={reduceMotion ? undefined : { y: [0, -14, 0], rotate: [0, 7, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <span className="orbital-object__halo" />
-        <span className="orbital-object__sphere" />
-        <span className="orbital-object__ring orbital-object__ring--one" />
-        <span className="orbital-object__ring orbital-object__ring--two" />
-        <span className="orbital-object__glint" />
-      </motion.div>
-    </div>
-  )
-}
-
 export function ProjectVisual({ project }: { project: Project }) {
   const visualRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
